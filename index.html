@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalyan King - Official Platform</title>
+    <!-- স্টাইল ফাইল লিংক -->
+    <link rel="stylesheet" href="style.css">
+    <!-- ফন্ট এবং আইকনের জন্য -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- নোটিফিকেশন টোস্ট -->
+    <div id="toast-notification">স্বাগতম! প্ল্যাটফর্মটি সফলভাবে লোড হয়েছে।</div>
+
+    <!-- মূল কার্ড বা ড্যাഷ്‌বোর্ড -->
+    <div class="main-card">
+        <h1>Kalyan King</h1>
+        <p>প্রফেশনাল সিকিউরিটি ও অটোমেশন প্ল্যাটফর্ম</p>
+        <div class="badge"><i class="fa-solid fa-shield-halved"></i> Active System v2.1</div>
+    </div>
+
+    <!-- প্রফেশনাল ফ্লটিং অ্যাড উইজেট -->
+    <div id="pro-ad-popup">
+        <div class="pro-ad-header">
+            <span class="pro-ad-title-tag"><i class="fa-solid fa-bolt"></i> Sponsored</span>
+            <div class="pro-controls">
+                <span id="ad-timer" class="timer-badge">5s</span>
+                <button class="pro-close-btn" id="closeBtn" onclick="closeProAd(event)" title="Close Ad" disabled>
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+        </div>
+        <div class="pro-ad-body" onclick="triggerSmartLink()">
+            <div class="pro-ad-icon">
+                <i class="fa-solid fa-fire"></i>
+            </div>
+            <div class="pro-ad-text">
+                <h4>এক্সক্লুসিভ অফার ও আপডেট</h4>
+                <p>বিশেষ অফারটি দেখতে এবং ভিজিট করতে এখানে ক্লিক করুন...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- জাভাস্ক্রিপ্ট কোড -->
+    <script>
+        const smartLinkURL = "https://auctionr.org/4/af602c03ca6d6141e16fa776c5a6e8f6";
+        let countdown = 5;
+        const timerElement = document.getElementById('ad-timer');
+        const closeButton = document.getElementById('closeBtn');
+        const adPopup = document.getElementById('pro-ad-popup');
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // ইউজার আগে বিজ্ঞাপন বন্ধ করেছে কিনা তা চেক করা
+            if (localStorage.getItem('kgf_ad_closed') === 'true') {
+                adPopup.style.display = 'none';
+                return;
+            }
+
+            // ওয়েলকাম টোস্ট মেসেজ দেখানো
+            setTimeout(() => {
+                const toast = document.getElementById('toast-notification');
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3500);
+            }, 500);
+
+            // ৫ সেকেন্ডের কাউন্টডাউন টাইমার
+            let interval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    timerElement.innerText = countdown + 's';
+                } else {
+                    clearInterval(interval);
+                    timerElement.style.display = 'none';
+                    closeButton.removeAttribute('disabled');
+                    closeButton.style.color = '#f8fafc';
+                }
+            }, 1000);
+        });
+
+        // বিজ্ঞাপনে ক্লিক করলে স্মার্টলিংক ওপেন হবে
+        function triggerSmartLink() {
+            window.open(smartLinkURL, '_blank');
+        }
+
+        // বিজ্ঞাপন বন্ধ করার ফাংশন
+        function closeProAd(event) {
+            event.stopPropagation();
+            localStorage.setItem('kgf_ad_closed', 'true');
+            adPopup.style.animation = 'slideInUp 0.4s reverse forwards';
+            setTimeout(() => {
+                adPopup.style.display = 'none';
+            }, 400);
+        }
+    </script>
+</body>
+</html>
